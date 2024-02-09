@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% block title %} Home Page {% endblock %}
+{% block content %}
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .title {
+            text-align: center;
+            margin-top: 3%;
+            color: #009688; /* Green color */
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        #expense-entry {
+            margin: 3% auto;
+            max-width: 600px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #009688; /* Green color */
+            color: #fff;
+            font-size: 1.5em;
+            padding: 15px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .form-label {
+            font-size: 1.1em;
+            color: #009688; /* Green color */
+        }
+
+        .form-control {
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #666;
+        }
+
+        .btn-success {
+            background-color: #009688; /* Green color */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+
+        .btn-success:hover {
+            background-color: #00796b; /* Darker shade of green */
+        }
+
+        .expense-view {
+            margin: 20px auto;
+            max-width: 800px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table th, .table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #009688; /* Green color */
+            color: #fff;
+        }
+
+        .total {
+            text-align: center;
+            font-size: 1.2em;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="title">Personal Expense Tracker</h1>
+    <br />
+    <div class="card text-center" id="expense-entry">
+        <div class="card-header">Enter a new Expense</div>
+        <div class="card-body">
+            <div class="mb-3 forms">
+                <form action="/home" autocomplete="off" method="POST">
+                    <label for="amount" class="form-label">Amount</label>
+                    <input type="number" class="form-control" name="amount" id="amount" placeholder="Amount in rupees" required>
+                    <label for="category" class="form-label">Category</label>
+                    <select class="form-select" name="category" id="category" aria-label="Default select example" required>
+                        <option value="Groceries" selected>Groceries</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Travel">Travel</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Food & Drink">Food & Drink</option>
+                        <option value="Automotive">Automotive</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <label for="note" class="form-label">Notes (Optional)</label>
+                    <input type="text" class="form-control" name="note" id="note" placeholder="Any extra notes?">
+                    <div class="d-grid gap-2 col-6 mx-auto" id="submit-field">
+                        <button class="btn btn-success" id="submit-btn" type="submit">Enter Expense</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card-footer text-muted">{{ user.username | title }}</div>
+    </div>
+    <div class="break">
+        <br />
+    </div>
+    <div class="expense-view">
+        <table class="table table-dark table-striped" id="expense-table">
+            <thead>
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Amount (Rupees)</th>
+                    <th scope="col">Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for expense in expenses %}
+                <tr>
+                    <td>{{ expense.date.strftime('%m-%d-%y') }}</td>
+                    <td>{{ expense.category }}</td>
+                    <td>{{ expense.amount }}</td>
+                    <td>{{ expense.note }}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td colspan="4" class="total"><center>Current total spent: ₹{{ get_total(user.id) }}</center></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+{% endblock %}

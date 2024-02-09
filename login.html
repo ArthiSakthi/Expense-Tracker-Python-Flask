@@ -1,0 +1,91 @@
+<html>
+  <title>{% block title %} Login {% endblock %}</title>
+  {% extends 'base.html' %} {% block content %}
+  <head>
+    <style>
+      body {
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+      }
+
+      .title, .title2 {
+        text-align: center;
+        margin: 3% 20% 1% 20%;
+        font-size: 2.5em;
+        color: #009688; /* Green color */
+      }
+
+      .title2 {
+        margin-top: 1%;
+        font-size: 2.3em;
+      }
+
+      .forms {
+        margin: 1% 20%;
+      }
+
+      .form-label {
+        color: #009688; /* Green color */
+      }
+
+      .form-control {
+        border: 1px solid #009688; /* Green color */
+      }
+
+      #submit-btn {
+        margin-top: 6%;
+        background-color: #009688; /* Green color */
+        color: #fff; /* White color */
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 1.1em;
+      }
+
+      #submit-btn:hover {
+        background-color: #00796b; /* Darker shade of green */
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="title">Already have an account?</h1>
+    <h2 class="title2">Just log-in with your Username & Password!</h2>
+    <div style="margin: 0 21%">
+      <hr />
+    </div>
+    <br />
+    <div class="mb-3 forms">
+      <form action="/login" autocomplete="off" method="POST">
+        <label for="exampleFormControlInput1" class="form-label"
+          >Username</label
+        >
+        <input
+          type="text"
+          class="form-control"
+          name="username"
+          id="exampleFormControlInput1"
+          placeholder="Username"
+        />
+        <br />
+        <label for="exampleFormControlInput1" class="form-label"
+          >Password</label
+        >
+        <input
+          type="password"
+          class="form-control"
+          name="password"
+          id="password"
+          placeholder="Enter password"
+        />
+
+        <div class="d-grid gap-2 col-6 mx-auto" id="submit-field">
+          <button class="btn btn-success" id="submit-btn" type="submit">
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+  {% endblock %}
+</html>
